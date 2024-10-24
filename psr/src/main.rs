@@ -2,7 +2,7 @@
 //user defined arguments and call lib.rs logic to handle them
 use clap::{Parser, Subcommand};
 use rusqlite::{Connection, Result};
-use sqlite::{create_table, drop_table, load_data_from_csv, query_exec}; //import library logic
+use psr::{create_table, drop_table, load_data_from_csv, query_exec}; //import library logic
 
 //Here we define a struct (or object) to hold our CLI arguments
 //for #[STUFF HERE] syntax, these are called attributes. Dont worry about them
