@@ -1,9 +1,9 @@
 use csv::ReaderBuilder; //for loading from csv
-use rusqlite::{params, Connection, Result}; 
+use rusqlite::{params, Connection, Result};
 use std::error::Error;
 use std::fs::File; //for loading csv //for capturing errors from loading
-                                     // Here we will have a function for each of the commands
-// Create a table
+                   // Here we will have a function for each of the commands
+                   // Create a table
 pub fn create_table(conn: &Connection, table_name: &str) -> Result<()> {
     let create_query = format!(
         "CREATE TABLE IF NOT EXISTS {} (
@@ -30,13 +30,16 @@ pub fn query_exec(conn: &Connection, query_string: &str) -> Result<()> {
         let name: String = row.get(1)?;
         let attendance_rate: i32 = row.get(2)?;
         let final_grade: i32 = row.get(3)?;
-        Ok((student_id,name,attendance_rate,final_grade))
+        Ok((student_id, name, attendance_rate, final_grade))
     })?;
 
     // Iterate over the rows and print the results
     for row in rows {
         let (student_id, name, attendance_rate, final_grade) = row?;
-        println!("ID: {}, Name: {}, Attendance Rate: {}, Final Grade: {}", student_id, name, attendance_rate, final_grade);
+        println!(
+            "ID: {}, Name: {}, Attendance Rate: {}, Final Grade: {}",
+            student_id, name, attendance_rate, final_grade
+        );
     }
 
     Ok(())
@@ -55,7 +58,8 @@ pub fn load_data_from_csv(
     conn: &Connection,
     table_name: &str,
     file_path: &str,
-) -> Result<(), Box<dyn Error>> { //Box<dyn Error> is a trait object that can represent any error type
+) -> Result<(), Box<dyn Error>> {
+    //Box<dyn Error> is a trait object that can represent any error type
     let file = File::open(file_path)?;
     let mut rdr = ReaderBuilder::new().from_reader(file);
 
@@ -71,7 +75,10 @@ pub fn load_data_from_csv(
         let attendance_rate: i32 = record[2].parse()?;
         let final_grade: i32 = record[3].parse()?;
 
-        conn.execute(&insert_query, params![student_id, name, attendance_rate, final_grade])?;
+        conn.execute(
+            &insert_query,
+            params![student_id, name, attendance_rate, final_grade],
+        )?;
     }
 
     println!(

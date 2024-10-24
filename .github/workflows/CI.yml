@@ -26,19 +26,19 @@ jobs:
         override: true
 
     - name: Check
-      run: make check
-      working-directory: ${{ env.WORKING_DIR }}
+      run: make -C psr check
+      working-directory: psr
 
     - name: Format
-      run: make format
+      run: make -C psr format
       working-directory: ${{ env.WORKING_DIR }}
 
     - name: Test
-      run: make test
+      run: make -C psr test
       working-directory: ${{ env.WORKING_DIR }}
 
     - name: Release
-      run: make release
+      run: make -C psr release
       working-directory: ${{ env.WORKING_DIR }}
 
     - name: Upload Binary Artifact
