@@ -27,7 +27,7 @@ jobs:
 
     - name: Check
       run: make -C psr check
-      working-directory: psr
+
 
     - name: Format
       run: make -C psr format
